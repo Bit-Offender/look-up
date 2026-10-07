@@ -7,7 +7,7 @@ import { getWeather } from "@/lib/weather";
 type Status = "loading" | "ready" | "error";
 
 export function useGetContext() {
-  // Derived, not stored: the browser's support never changes during the session.
+
   const supported = useSyncExternalStore(
     () => () => {},                    // nothing to subscribe to
     () => "geolocation" in navigator,  // client value
