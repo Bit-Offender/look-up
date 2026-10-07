@@ -1,10 +1,14 @@
+import type { Phase } from "./sun";
+import type { SkyCondition } from "./weather";
+
 export type Mission = {
   id: string;
   title: string;
-  time: string[];
-  sky: string[];
-  instruction: string;
+  time: (Phase | "any")[];
+  sky: (SkyCondition | "any")[];
+  instruction: string; // may contain {placeholders} from FACT_KEYS
   min: number;
+  needs?: "moon";
 };
 
 export const missions: Mission[] = [
@@ -31,7 +35,7 @@ export const missions: Mission[] = [
     time: ["golden"],
     sky: ["clear"],
     instruction:
-      "Watch the light change on one surface until it turns orange.",
+      "Golden hour ends at {sunset_time}. Watch the light change on one surface until it turns orange.",
     min: 5,
   },
   {
@@ -40,7 +44,7 @@ export const missions: Mission[] = [
     time: ["dusk", "night"],
     sky: ["clear"],
     instruction:
-      "Find the moon. Look for one dark patch and one bright patch.",
+      "Tonight's moon: {moon_status}. Find it. Look for one dark patch and one bright patch.",
     min: 3,
   },
   {
@@ -85,7 +89,7 @@ export const missions: Mission[] = [
     time: ["golden", "dusk"],
     sky: ["clear"],
     instruction:
-      "Watch the sky colors change near the horizon, not the sun itself. Name three.",
+      "Sunset is at {sunset_time}. Watch the sky colors change near the horizon, not the sun itself. Name three.",
     min: 8,
   },
   {
@@ -140,6 +144,41 @@ export const missions: Mission[] = [
     sky: ["clear"],
     instruction:
       "Find one water drop on a leaf or grass. Look at what it reflects.",
+    min: 3,
+  },
+    {
+    id: "cloud-edges",
+    title: "Cloud Edges",
+    time: ["golden", "dusk"],
+    sky: ["cloudy"],
+    instruction:
+      "Watch the edges of the clouds. Find where the light is brightest and where it fades.",
+    min: 4,
+  },
+  {
+    id: "night-sounds",
+    title: "Night Sounds",
+    time: ["dusk", "night"],
+    sky: ["clear", "cloudy"],
+    instruction: "Stand still. Name five distinct sounds around you.",
+    min: 4,
+  },
+  {
+    id: "lights-on",
+    title: "Lights On",
+    time: ["dusk"],
+    sky: ["clear", "cloudy"],
+    instruction:
+      "Watch the nearest windows. Count how many lights switch on before you leave.",
+    min: 5,
+  },
+  {
+    id: "cloud-glow",
+    title: "Cloud Glow",
+    time: ["night"],
+    sky: ["cloudy"],
+    instruction:
+      "Look at the underside of the clouds. Find the brightest patch and guess what's lighting it.",
     min: 3,
   },
 ];
