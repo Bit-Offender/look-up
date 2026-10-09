@@ -1,11 +1,9 @@
 import type { AppContext } from "@/types/context";
-import { getPhase } from "@/lib/sun";
 
 export default function ContextChips({ context }: { context: AppContext }) {
-  const phase = getPhase(context.sunsetInMinutes);
 
   const chips = [
-    { label: "Phase", value: phase },
+    { label: "Sky", value: context.phase },
     context.sunsetInMinutes !== null && {
       label: "Sunset",
       value:
@@ -14,15 +12,15 @@ export default function ContextChips({ context }: { context: AppContext }) {
           : `${Math.abs(context.sunsetInMinutes)} min ago`,
     },
     { label: "Clouds", value: `${context.cloudCover}%` },
-    { label: "Rain (6h)", value: `${context.rainLast6h.toFixed(1)} mm` },
-    { label: "Moon", value: `${Math.round(context.moonPhase * 100)}% through cycle` },
+    { label: "Rain 6h", value: `${context.rainLast6h.toFixed(1)} mm` },
+    { label: "Moon", value: `${Math.round(context.moonPhase * 100)}%` },
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <ul className="flex flex-wrap gap-2">
+    <ul className="chips">
       {chips.map((c) => (
-        <li key={c.label} className="rounded-full border px-3 py-1 text-sm">
-          <span className="opacity-60">{c.label}: </span>
+        <li key={c.label} className="chip">
+          <span>{c.label} </span>
           {c.value}
         </li>
       ))}

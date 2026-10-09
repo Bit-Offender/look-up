@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.85",
+    "@supabase/supabase-js": "^2.117.3",
     "astronomy-engine": "^2.1.19",
     "idb": "^8.0.4",
     "next": "16.3.8",
@@ -26,6 +27,7 @@
     "@types/suncalc": "^1.9.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
+    "supabase": "^2.120.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.3"

@@ -30,6 +30,9 @@ export function getDayTimes(date: Date, lat: number, lng: number) {
   };
 }
 
+export const sceneTint = (p: Phase): "day" | "dusk" | "night" =>
+  ({ dawn: "dusk", day: "day", golden: "dusk", dusk: "dusk", night: "night" } as const)[p];
+
 export function getPhaseAt(date: Date, lat: number, lng: number): Phase {
   const t = date.getTime();
   const d = getDayTimes(date, lat, lng);

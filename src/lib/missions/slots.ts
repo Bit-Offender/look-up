@@ -1,6 +1,6 @@
-import { getDayTimes, type Phase } from "./sun";
-import { buildFacts, type SkyFacts } from "./sky";
-import { skyAt, type Forecast, type SkyCondition } from "./weather";
+import { getDayTimes, type Phase } from "../world/sun";
+import { buildFacts, type SkyFacts } from "../world/sky";
+import { skyAt, type Forecast, type SkyCondition } from "../world/weather";
 
 export type Slot = {
   id: string;

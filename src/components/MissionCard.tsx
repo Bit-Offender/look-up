@@ -1,32 +1,28 @@
-import type { Mission } from "@/lib/missions";
+import Link from "next/link";
+import type { Mission } from "@/lib/missions/missions";
 
 type MissionCardProps = {
   mission: Mission;
+  onAnother?: () => void;
 };
 
-export default function MissionCard({
-  mission,
-}: MissionCardProps) {
+export default function MissionCard({ mission, onAnother }: MissionCardProps) {
   return (
-    <article className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
-        <span className="text-sm font-medium text-black/50">
-          {mission.min} min
-        </span>
-
-        <span className="rounded-full bg-black/5 px-3 py-1 text-xs capitalize text-black/60">
-          {mission.time.join(" · ")}
-        </span>
+    <article className="mission px-box">
+      <div className="mission__meta">
+        <span>{mission.min} min</span>
+        <span>{mission.time.join(" · ")}</span>
       </div>
 
-      <h2 className="text-2xl font-semibold tracking-tight">
-        {mission.title}
-      </h2>
+      <h2 className="mission__title">{mission.title}</h2>
+      <p className="mission__text">{mission.instruction}</p>
 
-      <p className="mt-3 leading-relaxed text-black/70">
-        {mission.instruction}
-      </p>
+      <div className="mission__actions">
+        <Link href="/away" className="px-btn">Go outside</Link>
+        {onAnother && (
+          <button onClick={onAnother} className="px-btn px-btn--ghost">Another</button>
+        )}
+      </div>
     </article>
   );
 }
-

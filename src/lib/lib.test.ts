@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { extractPlaceholders, fill } from "./fill";
-import { missions } from "./missions";
-import { matches, pickMission } from "./pickMission";
-import { FACT_KEYS, buildFacts, getVisiblePlanets } from "./sky";
-import { buildSlots } from "./slots";
-import { getDayTimes, getPhaseAt, type Phase } from "./sun";
-import { classifySky } from "./weather";
+import { extractPlaceholders, fill } from "./missions/fill";
+import { missions } from "./missions/missions";
+import { matches, pickMission } from "./missions/pickMission";
+import { FACT_KEYS, buildFacts, getVisiblePlanets } from "./world/sky";
+import { buildSlots } from "./missions/slots";
+import { getDayTimes, getPhaseAt, type Phase } from "./world/sun";
+import { classifySky } from "./world/weather";
 
 const LAT = 20.3;
 const LNG = 85.8;

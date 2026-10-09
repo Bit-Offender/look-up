@@ -1,3 +1,5 @@
+import type { Phase } from "@/lib/world/sun";
+
 export type AppContext = {
   latitude: number;
   longitude: number;
@@ -9,4 +11,6 @@ export type AppContext = {
 
   rainLast6h: number;
   cloudCover: number;
+
+  phase: Phase
 };

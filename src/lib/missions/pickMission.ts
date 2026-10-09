@@ -1,6 +1,6 @@
 import { missions as ALL, type Mission } from "./missions";
-import type { Phase } from "./sun";
-import type { SkyCondition } from "./weather";
+import type { Phase } from "../world/sun";
+import type { SkyCondition } from "../world/weather";
 
 export type PickInput = {
   phase: Phase;

@@ -1,0 +1,255 @@
+/* Look Up — pixel theme. Palette is pulled from the app icon. */
+:root {
+  --peach: #fbd3a6;
+  --peach-deep: #f6a56e;
+  --cream: #fff3dc;
+  --ink: #3b2a1e;
+  --leaf: #5f8a34;
+  --leaf-dark: #3f5f2a;
+  --leaf-light: #a3b83e;
+  --sun: #fcd88a;
+  --px: 4px;
+}
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--peach) 0%, var(--peach-deep) 100%) fixed;
+  color: var(--ink);
+  font-family: var(--font-body), ui-monospace, monospace;
+  font-size: 22px;
+  line-height: 1.25;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+.font-pixel { font-family: var(--font-pixel), ui-monospace, monospace; }
+
+.shell {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 20px 16px calc(104px + env(safe-area-inset-bottom, 0px));
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+}
+
+/* Notched pixel border: four offset shadows leave the corners empty. */
+.px-box {
+  margin: var(--px);
+  background: var(--cream);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 var(--ink),
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink),
+    inset 0 calc(var(--px) * -1) 0 0 rgba(59, 42, 30, 0.1);
+}
+
+.px-btn {
+  margin: var(--px);
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-pixel), monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 14px 16px;
+  color: var(--cream);
+  background: var(--leaf);
+  text-decoration: none;
+  display: inline-block;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 var(--ink),
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink),
+    inset 0 calc(var(--px) * -1) 0 0 var(--leaf-dark);
+}
+.px-btn:active { transform: translateY(2px); box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 var(--ink),
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink),
+    inset 0 var(--px) 0 0 var(--leaf-dark); }
+.px-btn--ghost {
+  color: var(--ink);
+  background: var(--cream);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 var(--ink),
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink),
+    inset 0 calc(var(--px) * -1) 0 0 rgba(59, 42, 30, 0.15);
+}
+.px-btn:focus-visible, .nav a:focus-visible, .marrow:focus-visible {
+  outline: 3px dashed var(--ink);
+  outline-offset: 4px;
+}
+
+/* Context chips */
+.chips { display: flex; flex-wrap: wrap; gap: 10px 6px; padding: 0; margin: 14px 0; list-style: none; }
+.chip {
+  margin: var(--px);
+  padding: 2px 10px;
+  background: var(--cream);
+  font-size: 20px;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 var(--ink),
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink);
+}
+.chip span { opacity: 0.6; }
+
+/* Mission card */
+.mission { padding: 18px 18px 20px; margin-top: 18px; }
+.mission__meta { display: flex; justify-content: space-between; align-items: center; font-size: 20px; opacity: 0.75; }
+.mission__title { font-family: var(--font-pixel), monospace; font-size: 15px; line-height: 1.6; margin: 14px 0 8px; }
+.mission__text { font-size: 24px; line-height: 1.2; margin: 0 0 16px; max-width: 34ch; }
+.mission__actions { display: flex; flex-wrap: wrap; align-items: center; }
+
+/* Marrow's nook (the scene) */
+.nook {
+  --sky-top: #ffe6bd; --sky-bot: #fdc78f;
+  --hill: #c3d27a; --cloud: #fffaf0; --cloud-shade: #f6dcc0;
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: linear-gradient(var(--sky-top), var(--sky-bot));
+}
+.nook[data-phase="dusk"] { --sky-top: #f59a7a; --sky-bot: #c97a8f; --hill: #b58aa0; --cloud: #ffd1b8; --cloud-shade: #e9a0a0; }
+.nook[data-phase="night"] { --sky-top: #2b2d5a; --sky-bot: #4b4a82; --hill: #3a4a6a; --cloud: #6b6fa8; --cloud-shade: #575b90; }
+.nook[data-phase="night"]::before {
+  content: ""; position: absolute; width: 4px; height: 4px; top: 22px; left: 30px; background: #fff3dc;
+  box-shadow: 60px 18px #fff3dc, 130px -6px #fff3dc, 210px 24px #fff3dc, 270px 4px #fff3dc, 330px 30px #fff3dc, 100px 56px #fff3dc;
+}
+.nook__sun {
+  position: absolute; right: 36px; top: 24px; width: 56px; height: 56px; background: var(--sun);
+  clip-path: polygon(25% 0, 75% 0, 75% 12.5%, 87.5% 12.5%, 87.5% 25%, 100% 25%, 100% 75%, 87.5% 75%, 87.5% 87.5%, 75% 87.5%, 75% 100%, 25% 100%, 25% 87.5%, 12.5% 87.5%, 12.5% 75%, 0 75%, 0 25%, 12.5% 25%, 12.5% 12.5%, 25% 12.5%);
+}
+.nook[data-phase="dusk"] .nook__sun { background: #ffb36b; top: 110px; }
+.nook[data-phase="night"] .nook__sun { background: #f3ede0; width: 40px; height: 40px; }
+.nook__ground {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 48px; z-index: 2;
+  background:
+    repeating-linear-gradient(90deg, var(--leaf-light) 0 8px, var(--leaf) 8px 16px) top / 100% 8px no-repeat,
+    var(--leaf);
+  border-top: 4px solid var(--leaf-dark);
+}
+.nook__ground::after {
+  content: ""; position: absolute; top: 12px; left: 0; width: 4px; height: 4px; background: var(--leaf-dark);
+  box-shadow: 40px 12px var(--leaf-dark), 110px 4px var(--leaf-dark), 190px 16px var(--leaf-dark),
+    260px 6px var(--leaf-dark), 330px 18px var(--leaf-dark), 400px 8px var(--leaf-dark);
+}
+
+/* Decor layers. z-index order: sun/far (1) < ground (2) < near decor (3) < Marrow (5). */
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.layer > svg, .layer > span { position: absolute; }
+.layer--far { z-index: 1; }
+.layer--near { z-index: 3; }
+.nook[data-phase="dusk"] .layer--near { filter: brightness(0.92) sepia(0.15); }
+.nook[data-phase="night"] .layer--near { filter: brightness(0.62) saturate(0.8); }
+
+.cloud { left: -120px; animation: drift linear infinite; }
+@keyframes drift { to { transform: translateX(700px); } }
+
+.butterfly { animation: flutter 16s steps(80) infinite; }
+.butterfly { transform-origin: 50% 50%; }
+@keyframes flutter {
+  0%   { left: 30%; top: 130px; }
+  25%  { left: 46%; top: 96px; }
+  50%  { left: 63%; top: 138px; }
+  75%  { left: 50%; top: 108px; }
+  100% { left: 30%; top: 130px; }
+}
+
+.firefly { display: none; width: 4px; height: 4px; background: #ffe9a0; box-shadow: 0 0 0 2px rgba(255, 233, 160, 0.3); }
+.nook[data-phase="night"] .firefly { display: block; animation: glow 2.4s steps(2) infinite alternate; }
+@keyframes glow { from { opacity: 0.2; transform: translate(0, 0); } to { opacity: 1; transform: translate(8px, -6px); } }
+
+/* ---- Old Marrow ---- */
+.marrow {
+  position: absolute; left: 0; top: 0; z-index: 5;
+  opacity: 0; /* the game loop reveals him once he has a position */
+  padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: left;
+  cursor: grab; touch-action: none; /* stops the page scrolling while you drag him */
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+  will-change: transform;
+}
+.marrow[data-mode="drag"] { cursor: grabbing; z-index: 6; }
+
+.marrow__flip { display: block; }
+.marrow[data-dir="-1"] .marrow__flip { transform: scaleX(-1); }
+
+.marrow__squash { display: block; transform-origin: 50% 100%; }
+.marrow[data-mode="dizzy"] .marrow__squash { animation: squash 0.35s steps(3) 1; }
+@keyframes squash {
+  0%   { transform: scale(1.25, 0.7); }
+  60%  { transform: scale(0.92, 1.08); }
+  100% { transform: scale(1, 1); }
+}
+
+.marrow__bob { display: block; transform-origin: 50% 0; }
+.marrow[data-mode="walk"] .marrow__bob { animation: bob 0.6s steps(1) infinite; }
+.marrow[data-mode="drag"] .marrow__bob { animation: dangle 0.45s steps(2) infinite alternate; }
+.marrow[data-mode="fall"] .marrow__bob { animation: dangle 0.25s steps(2) infinite alternate; }
+@keyframes bob { 50% { transform: translateY(-4px); } }
+@keyframes dangle { from { transform: rotate(-7deg); } to { transform: rotate(7deg); } }
+
+/* Walk cycle: two leg frames that swap on a timer */
+.leg-b { opacity: 0; }
+.marrow[data-mode="walk"] .leg-a { animation: legA 0.6s steps(1) infinite; }
+.marrow[data-mode="walk"] .leg-b { animation: legB 0.6s steps(1) infinite; }
+@keyframes legA { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes legB { 0% { opacity: 0; } 50% { opacity: 1; } }
+
+.stars { position: absolute; left: 10px; top: -12px; display: flex; gap: 22px; animation: orbit 0.5s steps(2) infinite alternate; }
+@keyframes orbit { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+
+/* Speech bubble: grows out of the side of his head, tail pointing at his face */
+.bubble {
+  position: absolute; top: 26px; left: 72px; z-index: 7;
+  display: block; width: var(--bw, 150px);
+  margin: 4px; padding: 8px 10px;
+  font-size: 21px; line-height: 1.1; color: var(--ink); background: var(--cream);
+  box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink);
+  pointer-events: none;
+  transform-origin: 0 40%;
+  animation: pop 0.25s steps(4) 1;
+}
+.bubble::before, .bubble::after {
+  content: ""; position: absolute; background: var(--cream); box-shadow: 0 0 0 4px var(--ink);
+}
+.bubble::before { width: 8px; height: 8px; left: -16px; top: 10px; }
+.bubble::after  { width: 4px; height: 4px; left: -28px; top: 16px; }
+.marrow[data-side="left"] .bubble { left: auto; right: 72px; transform-origin: 100% 40%; }
+.marrow[data-side="left"] .bubble::before { left: auto; right: -16px; }
+.marrow[data-side="left"] .bubble::after  { left: auto; right: -28px; }
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .marrow *, .cloud, .butterfly, .firefly, .bubble { animation: none !important; }
+}
+
+/* Bottom nav (PWA tab bar) */
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  display: flex; justify-content: center; gap: 12px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--cream);
+  border-top: 4px solid var(--ink);
+}
+.nav a {
+  flex: 1; max-width: 200px; text-align: center; padding: 12px 8px;
+  font-family: var(--font-pixel), monospace; font-size: 11px; text-decoration: none; color: var(--ink);
+  background: transparent;
+}
+.nav a[aria-current="page"] { background: var(--leaf); color: var(--cream); box-shadow: inset 0 -4px 0 var(--leaf-dark); }
+
+/* Journal */
+.page-title { font-family: var(--font-pixel), monospace; font-size: 16px; line-height: 1.6; margin: 8px 4px 0; }
+.entry { padding: 14px 16px 16px; margin-top: 18px; }
+.entry__date { font-size: 18px; opacity: 0.65; }
+.entry__title { font-family: var(--font-pixel), monospace; font-size: 12px; line-height: 1.6; margin: 6px 0; }
+.entry__photo { width: 100%; max-height: 260px; object-fit: cover; display: block; margin: 10px 0; border: 4px solid var(--ink); box-sizing: border-box; }
+.entry__text { font-size: 22px; margin: 0; white-space: pre-wrap; }
+.empty { padding: 16px; margin-top: 18px; font-size: 22px; }

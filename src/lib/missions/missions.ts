@@ -1,5 +1,5 @@
-import type { Phase } from "./sun";
-import type { SkyCondition } from "./weather";
+import type { Phase } from "../world/sun";
+import type { SkyCondition } from "../world/weather";
 
 export type Mission = {
   id: string;

@@ -1,4 +1,4 @@
-import { getDB } from "./db";
+import { getDB } from "../db/db";
 
 export type SkyCondition = "clear" | "cloudy" | "rain";
 
@@ -136,6 +136,6 @@ export async function getWeather(lat: number, lng: number) {
   return {
     rainLast6h,
     cloudCover: cur?.cloudCover ?? 0,
-    sky: (cur?.sky ?? "clear") as SkyCondition,
+    sky: (cur?.sky ?? null) as SkyCondition | null,
   };
 }

@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { AppContext } from "@/types/context";
-import { getSunInfo } from "@/lib/sun";
-import { getWeather } from "@/lib/weather";
+import { getSunInfo } from "@/lib/world/sun";
+import { getWeather } from "@/lib/world/weather";
 
 type Status = "loading" | "ready" | "error";
 
 export function useGetContext() {
-
   const supported = useSyncExternalStore(
-    () => () => {},                    // nothing to subscribe to
-    () => "geolocation" in navigator,  // client value
-    () => true                         // server value (avoids hydration mismatch)
+    () => () => {}, // nothing to subscribe to
+    () => "geolocation" in navigator, // client value
+    () => true, // server value (avoids hydration mismatch)
   );
 
   const [context, setContext] = useState<AppContext | null>(null);
@@ -28,7 +27,11 @@ export function useGetContext() {
         const { latitude, longitude } = coords;
         try {
           const sun = getSunInfo(latitude, longitude);
-          const weather = await getWeather(latitude, longitude);
+          const weather = await getWeather(latitude, longitude).catch(() => ({
+            rainLast6h: 0,
+            cloudCover: 0,
+            sky: null,
+          }));
           if (cancelled) return;
           setContext({ latitude, longitude, ...sun, ...weather });
           setStatus("ready");
@@ -43,7 +46,7 @@ export function useGetContext() {
         setStatus("error");
         setError(err.message);
       },
-      { timeout: 10000, maximumAge: 5 * 60 * 1000 }
+      { timeout: 10000, maximumAge: 5 * 60 * 1000 },
     );
 
     return () => {
