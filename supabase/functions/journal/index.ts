@@ -97,6 +97,7 @@ Deno.serve(async (req) => {
     generationConfig: { temperature: 0.8, maxOutputTokens: 2048 },
   });
   const started = Date.now();
+  console.log(`journal: calling gemma, image ${Math.round(image.length / 1024)} KB (base64)`);
   let upstream: Response | undefined;
   let lastError = "";
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -145,5 +146,6 @@ Deno.serve(async (req) => {
     console.error("empty reply", data?.candidates?.[0]?.finishReason, JSON.stringify(data?.promptFeedback ?? {}));
     return json({ error: "empty reply" }, 502);
   }
+  console.log(`journal: ok in ${Date.now() - started} ms, ${entry.length} chars`);
   return json({ entry });
 });
