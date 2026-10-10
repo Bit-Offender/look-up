@@ -28,7 +28,7 @@ const SITUATIONS: Record<string, string> = {
 
 /* ---------- Rate limiting (in memory: resets when the function cold-starts) ---------- */
 const PER_IP_PER_MIN = 10;
-const GLOBAL_PER_HOUR = 300; // protects your free quota no matter who calls
+const GLOBAL_PER_HOUR = 300; 
 const ipHits = new Map<string, number[]>();
 let globalHits: number[] = [];
 

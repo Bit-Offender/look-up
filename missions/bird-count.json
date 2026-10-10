@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "bird-count",
+  "title": "Bird Count",
+  "time": ["dawn", "day"],
+  "sky": ["clear", "cloudy"],
+  "instruction": "Stand still and count distinct bird calls.",
+  "min": 5
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "sunset-colors",
+  "title": "Sunset Colors",
+  "time": ["golden", "dusk"],
+  "sky": ["clear"],
+  "instruction": "Sunset is at {sunset_time}. Watch the sky colors change near the horizon, not the sun itself. Name three.",
+  "min": 8
+}

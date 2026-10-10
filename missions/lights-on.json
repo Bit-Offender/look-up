@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "lights-on",
+  "title": "Lights On",
+  "time": ["dusk"],
+  "sky": ["clear", "cloudy"],
+  "instruction": "Watch the nearest windows. Count how many lights switch on before you leave.",
+  "min": 5
+}

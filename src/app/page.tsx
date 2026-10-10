@@ -9,9 +9,11 @@ import Marrow from "@/components/Marrow";
 import MissionCard from "@/components/MissionCard";
 
 import { fill } from "@/lib/missions/fill";
-import type { Mission } from "@/lib/missions/missions";
+import { activeQueued, fillQueue, toGenSlot } from "@/lib/missions/generate";
+import { missions as STATIC, type Mission } from "@/lib/missions/missions";
 import { pickMission } from "@/lib/missions/pickMission";
 import { loadRecent, pushRecent } from "@/lib/missions/recent";
+import { buildSlots } from "@/lib/missions/slots";
 import { buildFacts, getMoon } from "@/lib/world/sky";
 import { getPhaseAt, sceneTint, type Phase } from "@/lib/world/sun";
 import { getWeather } from "@/lib/world/weather";
@@ -32,11 +34,15 @@ export default function Home() {
       .then((w) => w.sky)
       .catch(() => null);
 
+    // Static missions plus whatever Gemma has already written for the current time window.
+    const pool: Mission[] = [...STATIC, ...(await activeQueued())];
+
     const mission = pickMission({
       phase,
       sky,
       moonUp: getMoon(now, lat, lng).up,
       recentIds: loadRecent(),
+      pool,
     });
 
     return {
@@ -61,6 +67,17 @@ export default function Home() {
       live = false;
     };
   }, [compute, commit]);
+
+  // Background: ask Gemma for missions for the next few time windows and queue them in IndexedDB.
+  // Fire and forget. The first load shows a static mission; generated ones appear on the next pick.
+  // (No forecast passed yet, so slots use sky "any". If weather.ts has a forecast fetcher,
+  // pass its result as the 4th argument of buildSlots.)
+  useEffect(() => {
+    if (!context) return;
+    const { latitude: lat, longitude: lng } = context;
+    const slots = buildSlots(lat, lng, new Date()).map((s) => toGenSlot(s, lat, lng));
+    void fillQueue(slots, 3);
+  }, [context]);
 
   if (status === "loading")
     return <main className="shell"><p className="font-pixel" style={{ fontSize: 12 }}>Reading the sky…</p></main>;

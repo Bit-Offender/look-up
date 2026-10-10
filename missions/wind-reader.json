@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "wind-reader",
+  "title": "Wind Reader",
+  "time": ["day"],
+  "sky": ["any"],
+  "instruction": "Use leaves or trees to find the wind's direction. Face it for a minute.",
+  "min": 3
+}

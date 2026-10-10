@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "dew-check",
+  "title": "Dew Check",
+  "time": ["dawn"],
+  "sky": ["clear"],
+  "instruction": "Find one water drop on a leaf or grass. Look at what it reflects.",
+  "min": 3
+}

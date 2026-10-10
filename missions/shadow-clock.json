@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "shadow-clock",
+  "title": "Shadow Clock",
+  "time": ["day"],
+  "sky": ["clear"],
+  "instruction": "Mark your shadow's tip with a stone. Wait, then see how far it moved.",
+  "min": 5
+}

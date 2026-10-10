@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "contrail-hunt",
+  "title": "Contrail Hunt",
+  "time": ["day"],
+  "sky": ["clear"],
+  "instruction": "Find a plane trail and follow it to where it fades.",
+  "min": 4
+}

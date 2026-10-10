@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "cloud-zoo",
+  "title": "Cloud Zoo",
+  "time": ["day"],
+  "sky": ["cloudy"],
+  "instruction": "Find three animals or objects in the clouds.",
+  "min": 5
+}

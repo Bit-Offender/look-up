@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "cloud-edges",
+  "title": "Cloud Edges",
+  "time": ["golden", "dusk"],
+  "sky": ["cloudy"],
+  "instruction": "Watch the edges of the clouds. Find where the light is brightest and where it fades.",
+  "min": 4
+}

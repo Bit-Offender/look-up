@@ -1,0 +1,10 @@
+{
+  "$schema": "./schema.json",
+  "id": "moon-hello",
+  "title": "Moon Hello",
+  "time": ["dusk", "night"],
+  "sky": ["clear"],
+  "instruction": "Tonight's moon: {moon_status}. Find it. Look for one dark patch and one bright patch.",
+  "min": 3,
+  "needs": "moon"
+}

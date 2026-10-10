@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "rain-orchestra",
+  "title": "Rain Orchestra",
+  "time": ["any"],
+  "sky": ["rain"],
+  "instruction": "Stay under cover. Count the different sounds the rain makes.",
+  "min": 5
+}

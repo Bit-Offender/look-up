@@ -6,6 +6,7 @@ import { FACT_KEYS, buildFacts, getVisiblePlanets } from "./world/sky";
 import { buildSlots } from "./missions/slots";
 import { getDayTimes, getPhaseAt, type Phase } from "./world/sun";
 import { classifySky } from "./world/weather";
+import { validateGenerated } from "./missions/validate";
 
 const LAT = 20.3;
 const LNG = 85.8;
@@ -98,5 +99,28 @@ describe("planets", () => {
   it("returns none in broad daylight", () => {
     expect(getVisiblePlanets(NOON, LAT, LNG)).toEqual([]);
     expect(buildFacts(LAT, LNG, NOON).planet_list).toBe("no bright planets up");
+  });
+});
+
+describe("validateGenerated", () => {
+  const ctx = { phase: "dusk", sky: "clear", moonUp: true } as const;
+  const good = {
+    title: "Window Glow",
+    instruction: "Find the first lit window. Watch until one more joins it.",
+    min: 5,
+  };
+
+  it("accepts a good mission", () => expect(validateGenerated(good, ctx).ok).toBe(true));
+  it("rejects digits", () =>
+    expect(validateGenerated({ ...good, instruction: "Watch the sky for 5 minutes and count stars." }, ctx).ok).toBe(false));
+  it("rejects unknown placeholders", () =>
+    expect(validateGenerated({ ...good, instruction: "Count {star_count} stars before you leave." }, ctx).ok).toBe(false));
+  it("rejects moon_status when the moon is down", () =>
+    expect(validateGenerated({ ...good, instruction: "Tonight's moon: {moon_status}. Find it above the trees." }, { ...ctx, moonUp: false }).ok).toBe(false));
+  it("rejects phone talk", () =>
+    expect(validateGenerated({ ...good, instruction: "Take a photo of the best cloud you can find." }, ctx).ok).toBe(false));
+  it("rejects garbage", () => {
+    expect(validateGenerated("lol", ctx).ok).toBe(false);
+    expect(validateGenerated(null, ctx).ok).toBe(false);
   });
 });

@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "puddle-sky",
+  "title": "Puddle Sky",
+  "time": ["day"],
+  "sky": ["any"],
+  "instruction": "Find a puddle with the sky in it. Spot something up there you'd missed.",
+  "min": 3
+}

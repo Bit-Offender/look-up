@@ -83,3 +83,19 @@ export async function saveJournal(entry: Omit<JournalEntry, "id">): Promise<Jour
   await db.add("journal", full);
   return full;
 }
+
+export async function putQueued(m: QueuedMission) {
+  await (await getDB()).put("queue", m);
+}
+
+export async function listQueue(): Promise<QueuedMission[]> {
+  return (await getDB()).getAll("queue");
+}
+
+export async function pruneQueue(now = Date.now()) {
+  const db = await getDB();
+  const tx = db.transaction("queue", "readwrite");
+  const expired = await tx.store.index("by-validUntil").getAllKeys(IDBKeyRange.upperBound(now));
+  await Promise.all(expired.map((k) => tx.store.delete(k)));
+  await tx.done;
+}

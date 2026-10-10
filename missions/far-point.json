@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "far-point",
+  "title": "Far Point",
+  "time": ["any"],
+  "sky": ["any"],
+  "instruction": "Find the farthest thing you can see. Look at it for two minutes.",
+  "min": 2
+}

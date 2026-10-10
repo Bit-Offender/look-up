@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "dark-adapt",
+  "title": "Dark Adapt",
+  "time": ["night"],
+  "sky": ["clear"],
+  "instruction": "Look at the sky, no phone, for 5 minutes. Count how many more stars appear.",
+  "min": 6
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "golden-hands",
+  "title": "Golden Hands",
+  "time": ["golden"],
+  "sky": ["clear"],
+  "instruction": "Golden hour ends at {sunset_time}. Watch the light change on one surface until it turns orange.",
+  "min": 5
+}

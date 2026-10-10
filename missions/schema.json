@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Look Up mission",
+  "description": "One mission per file in /missions. The filename must equal the id. The real checks live in scripts/validate-missions.ts; this schema is for editor autocomplete.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "time", "sky", "instruction", "min"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "kebab-case, same as the filename without .json" },
+    "title": { "type": "string", "pattern": "^[A-Za-z][A-Za-z -]{2,23}$", "description": "Short and friendly, 3-24 characters, letters/spaces/hyphens only" },
+    "time": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["any", "dawn", "day", "golden", "dusk", "night"] },
+      "description": "When it fits. [\"any\"] must be the only entry if used."
+    },
+    "sky": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["any", "clear", "cloudy", "rain"] },
+      "description": "Which weather it fits. [\"any\"] must be the only entry if used."
+    },
+    "instruction": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 200,
+      "description": "One line, no screens. May use {sunset_time} (only with time golden/dusk) and {moon_status} (requires needs: moon)."
+    },
+    "min": { "type": "integer", "minimum": 2, "maximum": 10, "description": "Minutes the phone stays away" },
+    "needs": { "const": "moon", "description": "Only offered when the moon is up" }
+  }
+}

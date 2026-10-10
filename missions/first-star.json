@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "first-star",
+  "title": "First Star",
+  "time": ["dusk"],
+  "sky": ["clear"],
+  "instruction": "Wait for the first star or planet. Stay until you spot three.",
+  "min": 8
+}

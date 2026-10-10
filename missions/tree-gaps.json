@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "tree-gaps",
+  "title": "Tree Gaps",
+  "time": ["day"],
+  "sky": ["any"],
+  "instruction": "Stand under a tree and look up. Trace the shape of one sky gap.",
+  "min": 3
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "./schema.json",
+  "id": "night-sounds",
+  "title": "Night Sounds",
+  "time": ["dusk", "night"],
+  "sky": ["clear", "cloudy"],
+  "instruction": "Stand still. Name five distinct sounds around you.",
+  "min": 4
+}
