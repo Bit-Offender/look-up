@@ -88,22 +88,39 @@ Deno.serve(async (req) => {
     "Plain text only: no title, no quotes, no emoji, no hashtags, no lists.",
   ].join("\n");
 
-  let upstream: Response;
-  try {
-    upstream = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
-        // Image first, then the text, as the Gemini docs recommend for a single image.
-        contents: [{ role: "user", parts: [{ inline_data: { mime_type: "image/jpeg", data: image } }, { text: prompt }] }],
-        // Reasoning tokens count against this limit, so keep it roomy.
-        generationConfig: { temperature: 0.8, maxOutputTokens: 2048 },
-      }),
-      signal: AbortSignal.timeout(28_000),
-    });
-  } catch {
-    return json({ error: "model timeout" }, 504);
+  // Image calls are slower than text calls, so allow up to ~55 s in total (the client waits 60 s).
+  // Retry once, but only on a 5xx or a network failure and only if enough time is left.
+  const requestBody = JSON.stringify({
+    // Image first, then the text, as the Gemini docs recommend for a single image.
+    contents: [{ role: "user", parts: [{ inline_data: { mime_type: "image/jpeg", data: image } }, { text: prompt }] }],
+    // Reasoning tokens count against this limit, so keep it roomy.
+    generationConfig: { temperature: 0.8, maxOutputTokens: 2048 },
+  });
+  const started = Date.now();
+  let upstream: Response | undefined;
+  let lastError = "";
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const left = 55_000 - (Date.now() - started);
+    if (left < 10_000) break;
+    try {
+      upstream = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+        body: requestBody,
+        signal: AbortSignal.timeout(Math.min(40_000, left)),
+      });
+      if (upstream.status < 500 || attempt === 1) break;
+      lastError = `status ${upstream.status}`;
+      console.error("gemma 5xx, retrying once", upstream.status, await upstream.text());
+      upstream = undefined;
+    } catch (e) {
+      const err = e as Error;
+      lastError = `${err.name}: ${err.message}`;
+      console.error("gemma fetch failed:", lastError, "after", Date.now() - started, "ms");
+      upstream = undefined;
+    }
   }
+  if (!upstream) return json({ error: "model unreachable", detail: lastError }, 504);
 
   if (!upstream.ok) {
     console.error("gemma error", upstream.status, await upstream.text());

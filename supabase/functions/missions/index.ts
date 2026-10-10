@@ -75,23 +75,27 @@ Deno.serve(async (req) => {
     `- Do not reuse these ideas: ${avoid.join(", ") || "none"}`,
   ].join("\n");
 
-  let upstream: Response;
-  try {
-    upstream = await fetch(API_URL, {
+  // No JSON mode: Google returned 500 INTERNAL with it on. The prompt asks for JSON only and
+  // the parsing below strips code fences and extra words, so plain text mode is safe.
+  // Reasoning tokens count against maxOutputTokens, so keep it roomy (1024 truncated the JSON).
+  const request = () =>
+    fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
         contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 1.0,
-          // Reasoning tokens count against this limit. 1024 can run out before the JSON is
-          // finished, which gives truncated JSON and a silent "bad model json". Keep it roomy.
-          maxOutputTokens: 4096,
-          responseMimeType: "application/json",
-        },
+        generationConfig: { temperature: 1.0, maxOutputTokens: 2048 },
       }),
-      signal: AbortSignal.timeout(20_000),
+      signal: AbortSignal.timeout(14_000),
     });
+
+  let upstream: Response;
+  try {
+    upstream = await request();
+    if (upstream.status >= 500) {
+      console.error("gemma 5xx, retrying once", upstream.status, await upstream.text());
+      upstream = await request(); // Google's 500s are often transient
+    }
   } catch {
     return json({ error: "model timeout" }, 504);
   }

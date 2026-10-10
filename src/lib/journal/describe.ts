@@ -20,7 +20,7 @@ export async function describePhoto(photo: Blob, ctx: DescribeContext): Promise<
       method: "POST",
       headers: { "Content-Type": "application/json", apikey: ANON, Authorization: `Bearer ${ANON}` },
       body: JSON.stringify({ image, missionTitle: ctx.missionTitle, phase: ctx.phase }),
-      signal: AbortSignal.timeout(35_000),
+      signal: AbortSignal.timeout(60_000), // image calls to hosted Gemma can be slow; the function gives up at ~55 s
     });
     if (!res.ok) {
       console.warn("journal function failed:", res.status, await res.text().catch(() => ""));
